@@ -6,11 +6,11 @@
     "variables": {},
     "resources": [
         {
-            "name": "azurestorageaccount01",
+            "name": "viswastorageaccount01",
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "2023-01-01",
             "tags": {
-                "displayName": "azurestorageaccount01"
+                "displayName": "viswastorageaccount01"
             },
             "location": "[resourceGroup().location]",
             "kind": "StorageV2",
