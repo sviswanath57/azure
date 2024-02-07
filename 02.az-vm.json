@@ -11,7 +11,7 @@
             "apiVersion": "2023-01-01",
             "location": "[resourceGroup().location]",
             "tags": {
-                "displayName": "ubuntuVM1 Storage Account"
+                "displayName": "mydemovmaz Storage Account"
             },
             "sku": {
                 "name": "Standard_LRS"
@@ -19,7 +19,7 @@
             "kind": "Storage"
         },
         {
-            "name": "ubuntuVM1-PublicIP",
+            "name": "mydemovmaz-PublicIP",
             "type": "Microsoft.Network/publicIPAddresses",
             "apiVersion": "2023-04-01",
             "location": "[resourceGroup().location]",
@@ -29,12 +29,12 @@
             "properties": {
                 "publicIPAllocationMethod": "Dynamic",
                 "dnsSettings": {
-                    "domainNameLabel": "[toLower('ubuntuVM1')]"
+                    "domainNameLabel": "[toLower('mydemovmaz')]"
                 }
             }
         },
         {
-            "name": "ubuntuVM1-nsg",
+            "name": "mydemovmaz-nsg",
             "type": "Microsoft.Network/networkSecurityGroups",
             "apiVersion": "2023-04-01",
             "location": "[resourceGroup().location]",
@@ -58,15 +58,15 @@
             }
         },
         {
-            "name": "ubuntuVM1-VirtualNetwork",
+            "name": "mydemovmaz-VirtualNetwork",
             "type": "Microsoft.Network/virtualNetworks",
             "apiVersion": "2023-04-01",
             "location": "[resourceGroup().location]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/networkSecurityGroups', 'ubuntuVM1-nsg')]"
+                "[resourceId('Microsoft.Network/networkSecurityGroups', 'mydemovmaz-nsg')]"
             ],
             "tags": {
-                "displayName": "ubuntuVM1-VirtualNetwork"
+                "displayName": "mydemovmaz-VirtualNetwork"
             },
             "properties": {
                 "addressSpace": {
@@ -76,11 +76,11 @@
                 },
                 "subnets": [
                     {
-                        "name": "ubuntuVM1-VirtualNetwork-Subnet",
+                        "name": "mydemovmaz-VirtualNetwork-Subnet",
                         "properties": {
                             "addressPrefix": "10.0.0.0/24",
                             "networkSecurityGroup": {
-                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'ubuntuVM1-nsg')]"
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'mydemovmaz-nsg')]"
                             }
                         }
                     }
@@ -88,16 +88,16 @@
             }
         },
         {
-            "name": "ubuntuVM1-NetworkInterface",
+            "name": "mydemovmaz-NetworkInterface",
             "type": "Microsoft.Network/networkInterfaces",
             "apiVersion": "2023-04-01",
             "location": "[resourceGroup().location]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/publicIPAddresses', 'ubuntuVM1-PublicIP')]",
-                "[resourceId('Microsoft.Network/virtualNetworks', 'ubuntuVM1-VirtualNetwork')]"
+                "[resourceId('Microsoft.Network/publicIPAddresses', 'mydemovmaz-PublicIP')]",
+                "[resourceId('Microsoft.Network/virtualNetworks', 'mydemovmaz-VirtualNetwork')]"
             ],
             "tags": {
-                "displayName": "ubuntuVM1-NetworkInterface"
+                "displayName": "mydemovmaz-NetworkInterface"
             },
             "properties": {
                 "ipConfigurations": [
@@ -106,10 +106,10 @@
                         "properties": {
                             "privateIPAllocationMethod": "Dynamic",
                             "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', 'ubuntuVM1-PublicIP')]"
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', 'mydemovmaz-PublicIP')]"
                             },
                             "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', 'ubuntuVM1-VirtualNetwork', 'ubuntuVM1-VirtualNetwork-Subnet')]"
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', 'mydemovmaz-VirtualNetwork', 'mydemovmaz-VirtualNetwork-Subnet')]"
                             }
                         }
                     }
@@ -117,22 +117,22 @@
             }
         },
         {
-            "name": "ubuntuVM1",
+            "name": "mydemovmaz",
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "2023-03-01",
             "location": "[resourceGroup().location]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/networkInterfaces', 'ubuntuVM1-NetworkInterface')]"
+                "[resourceId('Microsoft.Network/networkInterfaces', 'mydemovmaz-NetworkInterface')]"
             ],
             "tags": {
-                "displayName": "ubuntuVM1"
+                "displayName": "mydemovmaz"
             },
             "properties": {
                 "hardwareProfile": {
                     "vmSize": "Standard_A2_v2"
                 },
                 "osProfile": {
-                    "computerName": "ubuntuVM1",
+                    "computerName": "mydemovmaz",
                     "adminUsername": "adminUsername",
                     "adminPassword": "adminPassword"
                 },
@@ -144,7 +144,7 @@
                         "version": "latest"
                     },
                     "osDisk": {
-                        "name": "ubuntuVM1-OSDisk",
+                        "name": "mydemovmaz-OSDisk",
                         "caching": "ReadWrite",
                         "createOption": "FromImage"
                     }
@@ -152,7 +152,7 @@
                 "networkProfile": {
                     "networkInterfaces": [
                         {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', 'ubuntuVM1-NetworkInterface')]"
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', 'mydemovmaz-NetworkInterface')]"
                         }
                     ]
                 },
