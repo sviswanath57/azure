@@ -134,7 +134,7 @@
                 "osProfile": {
                     "computerName": "mydemovmaz",
                     "adminUsername": "adminUsername",
-                    "adminPassword": "adminPassword"
+                    "adminPassword": "Capital@100"
                 },
                 "storageProfile": {
                     "imageReference": {
